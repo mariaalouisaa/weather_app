@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container app-body">
+      <div class="current-temp-items">
+        <h1 id="city-title">City pending...</h1>
+        <h2>⏳</h2>
+ <div>
+    <button type="button" id="celcius-temp" class="celciusButton buttonClicked">°C</button>
+    <button type="button" id="fahrenheit-temp" class="farenButton buttonUnclicked">°F</button>
+  </div>
+
+        <h3 id="current-time"></h3>
+        <h4 id="current-date"></h4>
+      </div>
+
+      <img src="images/sun.png" class="main-image rotate" />
+     <div id="search-container">
+      <form id="search-bar">
+        <input id="city-search" type="text" placeholder="   Change city" class="search-bar" />
+      </form>
+     <div href="#" class="current-link" id="gps-link">Current location 📍  </div> 
+</div>
+      <div class="five-day-container">
+      <div class="column">
+        <div class="weekly-head day-1">Mon</div>
+         <div class="weekly-img img-1">
+               <img src="images/sun.png" />
+        </div>
+        <div class="weekly-low low-1">4°C</div>
+        <div class="weekly-high high-1">16°C</div>
+      </div>
+      <div class="column">
+        <div class="weekly-head day-2">Tue</div>
+        <div class="weekly-img img-2">   
+             <img src="images/rain.png" />
+        </div>
+        <div class="weekly-low low-2">2°C</div>
+        <div class="weekly-high high-2">15°C</div>
+        </div>
+        <div class="column">
+        <div class="weekly-head day-3">Wed</div>
+        <div class="weekly-img img-3">
+        <img src="images/cloud.png" />
+        </div>
+        <div class="weekly-low low-3">5°C</div>
+        <div class="weekly-high high-3">14°C</div>
+        </div>
+        <div class="column">
+        <div class="weekly-head day-4">Thur</div>
+        <div class="weekly-img img-4">
+        <img src="images/rain.png" />
+        </div>
+        <div class="weekly-low low-4">3°C</div>
+       <div class="weekly-high high-4">16°C</div>  
+        </div>
+<div class="column">
+        <div class="weekly-head day-5">Fri</div>
+        <div class="weekly-img img-5">
+                         <img src="images/sun.png" />
+        </div>
+        <div class="weekly-low low-5">4°C</div>
+        <div class="weekly-high high-5">11°C</div>
+</div>
+      </div>
+<script src="script.js"></script>
+  </body>
+</html>
