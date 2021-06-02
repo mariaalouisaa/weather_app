@@ -65,6 +65,12 @@ function convertCelcius(event) {
   document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
+function changeBackground() {
+  if ((hour) => 20) document.querySelector("body").classList.add("night-bg");
+  if ((hour) => 20)
+    document.getElementById("main-image").src = "images/moon.png";
+}
+
 let now = new Date();
 
 let hour = now.getHours();
@@ -107,3 +113,4 @@ let currentLocation = document.querySelector("#gps-link");
 currentLocation.addEventListener("click", findCurrentGps);
 
 findCurrentGps();
+changeBackground();
