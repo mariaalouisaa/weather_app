@@ -72,6 +72,7 @@ if (hour < 10) hour = "0" + now.getHours();
 let minute = now.getMinutes();
 if (minute < 10) minute = "0" + now.getMinutes();
 let date = now.getDate();
+if (date < 10) date = "0" + now.getDate();
 let months = [
   "01",
   "02",
