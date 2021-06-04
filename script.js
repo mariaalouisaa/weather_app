@@ -66,9 +66,8 @@ function convertCelcius(event) {
 }
 
 function changeBackground() {
-  if ((hour) => 20) document.querySelector("body").classList.add("night-bg");
-  if ((hour) => 20)
-    document.getElementById("main-image").src = "images/moon.png";
+  if (hour > 20) document.querySelector("body").classList.add("night-bg");
+  if (hour > 20) document.getElementById("main-image").src = "images/moon.png";
 }
 
 let now = new Date();
