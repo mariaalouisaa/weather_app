@@ -48,17 +48,21 @@ img {
   position: absolute;
   left: 5%;
   top: 25px;
-  opacity: 90%;
+  opacity: 85%;
 }
-.rotate {
-  animation: rotation 25s infinite linear;
+
+.pulse {
+  animation: pulse 9s ease-in-out infinite;
 }
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
   }
-  to {
-    transform: rotate(359deg);
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
   }
 }
 
