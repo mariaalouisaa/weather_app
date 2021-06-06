@@ -18,9 +18,10 @@ function findLatLong(position) {
 }
 
 function displayGpsStats(response) {
+  document.querySelector("#city-title").innerHTML = response.data.name;
   document.querySelector(
-    "h1"
-  ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
+    "#country"
+  ).innerHTML = `, ${response.data.sys.country}`;
   document.querySelector("#description").innerHTML =
     response.data.weather[0].description;
   document.querySelector("h2").innerHTML = `${Math.round(
@@ -29,9 +30,10 @@ function displayGpsStats(response) {
 }
 
 function showCityTemp(response) {
+  document.querySelector("#city-title").innerHTML = response.data.name;
   document.querySelector(
-    "#city-title"
-  ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
+    "#country"
+  ).innerHTML = `, ${response.data.sys.country}`;
   let temp = Math.round(response.data.main.temp);
   document.querySelector("h2").innerHTML = `${temp}º`;
   document.querySelector("#description").innerHTML =
@@ -39,7 +41,6 @@ function showCityTemp(response) {
 
   let iconElement = document.getElementById("main-image");
   let weather = response.data.weather[0].main;
-  console.log(weather);
   if (weather === "Clear") {
     iconElement.src = "images/sun.png";
   } else {
@@ -65,20 +66,24 @@ function showCityTemp(response) {
 
 function citySearch(event) {
   event.preventDefault();
-  let city = document.querySelector("#city-search").value;
+
+  let city = document.getElementById("city-search").value;
+  console.log(city);
   axios
     .get(`${apiFront}q=${city}&appid=${apiKey}&units=metric`)
     .then(showCityTemp);
+
+  document.querySelector(".celciusButton").classList.add("buttonUnclicked");
+  document.querySelector(".farenButton").classList.remove("buttonClicked");
+  document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
 function convertFahrenheit(event) {
   event.preventDefault();
 
-  let cityInput = document.querySelector("#city-search");
-  document.querySelector("#city-title").innerHTML = cityInput.value;
-  let city = cityInput.value;
+  let city = document.getElementById("city-title");
   axios
-    .get(`${apiFront}q=${city}&appid=${apiKey}&units=imperial`)
+    .get(`${apiFront}q=${city.textContent}&appid=${apiKey}&units=imperial`)
     .then(showCityTemp);
 
   document.querySelector(".farenButton").classList.add("buttonClicked");
@@ -89,11 +94,9 @@ function convertFahrenheit(event) {
 function convertCelcius(event) {
   event.preventDefault();
 
-  let cityInput = document.querySelector("#city-search");
-  document.querySelector("#city-title").innerHTML = cityInput.value;
-  let city = cityInput.value;
+  let city = document.querySelector("#city-title");
   axios
-    .get(`${apiFront}q=${city}&appid=${apiKey}&units=metric`)
+    .get(`${apiFront}q=${city.textContent}&appid=${apiKey}&units=metric`)
     .then(showCityTemp);
 
   document.querySelector(".celciusButton").classList.add("buttonUnclicked");
