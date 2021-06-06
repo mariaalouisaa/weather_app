@@ -37,21 +37,30 @@ function showCityTemp(response) {
   document.querySelector("#description").innerHTML =
     response.data.weather[0].description;
 
-  /*let iconElement = document.querySelector("#main-image");
+  let iconElement = document.getElementById("main-image");
   let weather = response.data.weather[0].main;
-  if ((weather = "clear")) {
-    iconElement.setAttribute("src", "images/sun.png");
+  console.log(weather);
+  if (weather === "Clear") {
+    iconElement.src = "images/sun.png";
   } else {
-    if ((weather = "clouds")) {
-      iconElement.setAttribute("src", "images/cloud.png");
+    if (weather === "Clouds") {
+      iconElement.src = "images/cloud.png";
     } else {
-      if ((weather = "Rain")) {
-        iconElement.setAttribute("src", "images/rain.png");
+      if (weather === "Rain" || weather === "Drizzle") {
+        iconElement.src = "images/rain.png";
       } else {
-        iconElement.setAttribute("src", "images/thunder.png");
+        if (weather === "Thunderstorm") {
+          iconElement.src = "images/thunder.png";
+        } else {
+          if (weather === "Snow") {
+            iconElement.src = "images/snow.png";
+          } else {
+            iconElement.src = "images/mist.png";
+          }
+        }
       }
     }
-  }*/
+  }
 }
 
 function citySearch(event) {
