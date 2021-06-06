@@ -1,3 +1,7 @@
+//clear input after submit
+//change nightmode to sunset time?
+//main emoji dependent on weather
+
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
 
@@ -14,22 +18,45 @@ function findLatLong(position) {
 }
 
 function displayGpsStats(response) {
-  document.querySelector("h1").innerHTML = response.data.name;
+  document.querySelector(
+    "h1"
+  ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
+  document.querySelector("#description").innerHTML =
+    response.data.weather[0].description;
   document.querySelector("h2").innerHTML = `${Math.round(
     response.data.main.temp
   )}º`;
 }
 
 function showCityTemp(response) {
+  document.querySelector(
+    "#city-title"
+  ).innerHTML = `${response.data.name}, ${response.data.sys.country}`;
   let temp = Math.round(response.data.main.temp);
   document.querySelector("h2").innerHTML = `${temp}º`;
+  document.querySelector("#description").innerHTML =
+    response.data.weather[0].description;
+
+  /*let iconElement = document.querySelector("#main-image");
+  let weather = response.data.weather[0].main;
+  if ((weather = "clear")) {
+    iconElement.setAttribute("src", "images/sun.png");
+  } else {
+    if ((weather = "clouds")) {
+      iconElement.setAttribute("src", "images/cloud.png");
+    } else {
+      if ((weather = "Rain")) {
+        iconElement.setAttribute("src", "images/rain.png");
+      } else {
+        iconElement.setAttribute("src", "images/thunder.png");
+      }
+    }
+  }*/
 }
 
 function citySearch(event) {
   event.preventDefault();
-  let cityInput = document.querySelector("#city-search");
-  document.querySelector("#city-title").innerHTML = cityInput.value;
-  let city = cityInput.value;
+  let city = document.querySelector("#city-search").value;
   axios
     .get(`${apiFront}q=${city}&appid=${apiKey}&units=metric`)
     .then(showCityTemp);
@@ -65,9 +92,10 @@ function convertCelcius(event) {
   document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
-function changeBackground() {
+function nightMode() {
   if (hour > 20) document.querySelector("body").classList.add("night-bg");
-  if (hour > 20) document.getElementById("main-image").src = "images/moon.png";
+  if (hour > 20)
+    document.getElementsByClassName("main-image").src = "images/moon.png";
 }
 
 let now = new Date();
@@ -112,4 +140,4 @@ let currentLocation = document.querySelector("#gps-link");
 currentLocation.addEventListener("click", findCurrentGps);
 
 findCurrentGps();
-changeBackground();
+//nightMode();

@@ -34,6 +34,11 @@ h4 {
   margin-bottom: 4px;
 }
 
+p {
+  margin: 0;
+  text-transform: capitalize;
+}
+
 img {
   width: 50px;
 }
