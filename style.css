@@ -39,6 +39,11 @@ p {
   text-transform: capitalize;
 }
 
+.country {
+  font-size: 16px;
+  line-height: 16px;
+}
+
 img {
   width: 50px;
 }

@@ -1,6 +1,4 @@
-//clear input after submit
-//change nightmode to sunset time?
-//main emoji dependent on weather
+//change nightmode to sunset time
 
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
@@ -41,22 +39,27 @@ function showCityTemp(response) {
 
   let iconElement = document.getElementById("main-image");
   let weather = response.data.weather[0].main;
-  if (weather === "Clear") {
-    iconElement.src = "images/sun.png";
+  console.log(hour);
+  if (hour > 20) {
+    iconElement.src = "images/moon.png";
   } else {
-    if (weather === "Clouds") {
-      iconElement.src = "images/cloud.png";
+    if (weather === "Clear") {
+      iconElement.src = "images/sun.png";
     } else {
-      if (weather === "Rain" || weather === "Drizzle") {
-        iconElement.src = "images/rain.png";
+      if (weather === "Clouds") {
+        iconElement.src = "images/cloud.png";
       } else {
-        if (weather === "Thunderstorm") {
-          iconElement.src = "images/thunder.png";
+        if (weather === "Rain" || weather === "Drizzle") {
+          iconElement.src = "images/rain.png";
         } else {
-          if (weather === "Snow") {
-            iconElement.src = "images/snow.png";
+          if (weather === "Thunderstorm") {
+            iconElement.src = "images/thunder.png";
           } else {
-            iconElement.src = "images/mist.png";
+            if (weather === "Snow") {
+              iconElement.src = "images/snow.png";
+            } else {
+              iconElement.src = "images/mist.png";
+            }
           }
         }
       }
@@ -69,7 +72,6 @@ function citySearch(event) {
 
   let city = document.getElementById("city-search").value;
   document.forms["search-bar"].reset();
-  console.log(city);
   axios
     .get(`${apiFront}q=${city}&appid=${apiKey}&units=metric`)
     .then(showCityTemp);
@@ -107,8 +109,7 @@ function convertCelcius(event) {
 
 function nightMode() {
   if (hour > 20) document.querySelector("body").classList.add("night-bg");
-  if (hour > 20)
-    document.getElementsByClassName("main-image").src = "images/moon.png";
+  if (hour > 20) document.querySelector(".main-image").src = "images/moon.png";
 }
 
 let now = new Date();
@@ -153,4 +154,4 @@ let currentLocation = document.querySelector("#gps-link");
 currentLocation.addEventListener("click", findCurrentGps);
 
 findCurrentGps();
-//nightMode();
+nightMode();
