@@ -68,7 +68,7 @@ function citySearch(event) {
   event.preventDefault();
 
   let city = document.getElementById("city-search").value;
-  document.getElementById("city-search").value = "";
+  document.forms["search-bar"].reset();
   console.log(city);
   axios
     .get(`${apiFront}q=${city}&appid=${apiKey}&units=metric`)
