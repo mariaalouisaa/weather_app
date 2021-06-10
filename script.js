@@ -115,6 +115,32 @@ function convertCelcius(event) {
   document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+
+  let forecastHTML = `<div class="five-day-container">`;
+
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="column">
+        <div class="weekly-head day-1">${day}</div>
+         <div class="weekly-img img-1">
+               <img src="images/sun.png" />
+         </div>
+         <div class="weekly-low low-1">4°C</div>
+         <div class="weekly-high high-1">16°C</div>
+         </div>
+    `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function nightMode() {
   if (hour > 20) document.querySelector("body").classList.add("night-bg");
   if (hour > 20) document.querySelector(".main-image").src = "images/moon.png";
@@ -163,3 +189,5 @@ currentLocation.addEventListener("click", findCurrentGps);
 
 findCurrentGps();
 nightMode();
+
+displayForecast();
