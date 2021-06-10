@@ -1,4 +1,5 @@
 //change nightmode to sunset time
+//show time of city displayed
 
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
@@ -42,23 +43,30 @@ function showCityTemp(response) {
   console.log(hour);
   if (hour > 20) {
     iconElement.src = "images/moon.png";
+    iconElement.alt = "Moon emoji";
   } else {
     if (weather === "Clear") {
       iconElement.src = "images/sun.png";
+      iconElement.alt = "Sun emoji";
     } else {
       if (weather === "Clouds") {
         iconElement.src = "images/cloud.png";
+        iconElement.alt = "Clouds emoji";
       } else {
         if (weather === "Rain" || weather === "Drizzle") {
           iconElement.src = "images/rain.png";
+          iconElement.alt = "Clouds with rain emoji";
         } else {
           if (weather === "Thunderstorm") {
             iconElement.src = "images/thunder.png";
+            iconElement.alt = "Clouds with lightening emoji";
           } else {
             if (weather === "Snow") {
               iconElement.src = "images/snow.png";
+              iconElement.alt = "Snow emoji";
             } else {
               iconElement.src = "images/mist.png";
+              iconElement.alt = "Mist emoji";
             }
           }
         }
