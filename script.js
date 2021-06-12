@@ -1,5 +1,5 @@
 //change nightmode to sunset time
-//show time of city displayed
+//show time of city displayed, external api?
 
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
@@ -26,6 +26,8 @@ function displayGpsStats(response) {
   document.querySelector("h2").innerHTML = `${Math.round(
     response.data.main.temp
   )}º`;
+
+  getForecast(response.data.coord);
 }
 
 function showCityTemp(response) {
@@ -40,7 +42,6 @@ function showCityTemp(response) {
 
   let iconElement = document.getElementById("main-image");
   let weather = response.data.weather[0].main;
-  console.log(hour);
   if (hour > 20) {
     iconElement.src = "images/moon.png";
     iconElement.alt = "Moon emoji";
@@ -73,6 +74,8 @@ function showCityTemp(response) {
       }
     }
   }
+
+  getForecast(response.data.coord);
 }
 
 function citySearch(event) {
@@ -87,6 +90,12 @@ function citySearch(event) {
   document.querySelector(".celciusButton").classList.add("buttonUnclicked");
   document.querySelector(".farenButton").classList.remove("buttonClicked");
   document.querySelector(".celciusButton").classList.add("buttonClicked");
+}
+
+function getForecast(coordinates) {
+  let city = document.querySelector("#city-title").innerText;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,alerts&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function convertFahrenheit(event) {
@@ -115,19 +124,20 @@ function convertCelcius(event) {
   document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
+  let array = response.data.daily;
+
   let forecastElement = document.querySelector("#forecast");
-
-  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
-
   let forecastHTML = `<div class="five-day-container">`;
 
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+  array.forEach(function (array, index) {
+    if (index < 5) {
+      forecastHTML =
+        forecastHTML +
+        `
     <div class="column">
-        <div class="weekly-head day-1">${day}</div>
+        <div class="weekly-head day-1">${array.dt}</div>
          <div class="weekly-img img-1">
                <img src="images/sun.png" />
          </div>
@@ -135,10 +145,18 @@ function displayForecast() {
          <div class="weekly-high high-1">16°C</div>
          </div>
     `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+
+function formatForcastDay(timestamp) {
+  let date = newDate(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
 }
 
 function nightMode() {

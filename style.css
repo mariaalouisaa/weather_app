@@ -10,6 +10,7 @@ body {
 
 .night-bg {
   background: linear-gradient(rgb(3, 9, 58), rgb(255, 255, 255));
+  background-repeat: no-repeat;
 }
 
 h1 {
