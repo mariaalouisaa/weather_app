@@ -125,7 +125,6 @@ function convertCelcius(event) {
 }
 
 function displayForecast(response) {
-  console.log(response.data.daily);
   let array = response.data.daily;
 
   let forecastElement = document.querySelector("#forecast");
@@ -137,12 +136,12 @@ function displayForecast(response) {
         forecastHTML +
         `
     <div class="column">
-        <div class="weekly-head day-1">${array.dt}</div>
-         <div class="weekly-img img-1">
+        <div class="weekly-head">${formatForcastDay(array.dt)}</div>
+         <div class="weekly-img">
                <img src="images/sun.png" />
          </div>
-         <div class="weekly-low low-1">4°C</div>
-         <div class="weekly-high high-1">16°C</div>
+         <div class="weekly-high">${Math.round(array.temp.max)}º</div>
+         <div class="weekly-low">${Math.round(array.temp.min)}º</div>
          </div>
     `;
     }
@@ -153,7 +152,7 @@ function displayForecast(response) {
 }
 
 function formatForcastDay(timestamp) {
-  let date = newDate(timestamp * 1000);
+  let date = new Date(timestamp * 1000);
   let day = date.getDay();
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   return days[day];
