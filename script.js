@@ -6,29 +6,28 @@ let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
 
 function findCurrentGps() {
   navigator.geolocation.getCurrentPosition(findLatLong);
-}
 
-function findLatLong(position) {
-  let lat = position.coords.latitude;
-  let long = position.coords.longitude;
-  axios
-    .get(`${apiFront}lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`)
-    .then(displayGpsStats);
-}
+  function findLatLong(position) {
+    let lat = position.coords.latitude;
+    let long = position.coords.longitude;
+    axios
+      .get(`${apiFront}lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`)
+      .then(displayGpsStats);
+  }
+  function displayGpsStats(response) {
+    document.querySelector("#city-title").innerHTML = response.data.name;
+    document.querySelector(
+      "#country"
+    ).innerHTML = `, ${response.data.sys.country}`;
+    document.querySelector("#description").innerHTML =
+      response.data.weather[0].description;
+    document.querySelector("h2").innerHTML = `${Math.round(
+      response.data.main.temp
+    )}º`;
 
-function displayGpsStats(response) {
-  document.querySelector("#city-title").innerHTML = response.data.name;
-  document.querySelector(
-    "#country"
-  ).innerHTML = `, ${response.data.sys.country}`;
-  document.querySelector("#description").innerHTML =
-    response.data.weather[0].description;
-  document.querySelector("h2").innerHTML = `${Math.round(
-    response.data.main.temp
-  )}º`;
-
-  getForecast(response.data.coord);
-  changeMainImage(response.data.weather[0].main);
+    getForecast(response.data.coord);
+    changeMainImage(response.data.weather[0].main);
+  }
 }
 
 function showCityTemp(response) {
@@ -140,9 +139,9 @@ function displayForecast(response) {
         `
     <div class="column">
         <div class="weekly-head">${formatForcastDay(array.dt)}</div>
-         <div class="weekly-img">
-               <img src="images/sun.png" />
-         </div>
+         <div class="weekly-img">${formatForecastImage(
+           array.weather[0].main
+         )}</div>
          <div class="weekly-high">${Math.round(array.temp.max)}º</div>
          <div class="weekly-low">${Math.round(array.temp.min)}º</div>
          </div>
@@ -159,6 +158,31 @@ function formatForcastDay(timestamp) {
   let day = date.getDay();
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   return days[day];
+}
+
+function formatForecastImage(weather) {
+  console.log(weather);
+  if (weather === "Clear") {
+    return `<img src="images/sun.png" alt="Sun emoji"></img>`;
+  } else {
+    if (weather === "Clouds") {
+      return `<img src="images/cloud.png" alt="Cloud emoji"></img>`;
+    } else {
+      if (weather === "Rain" || weather === "Drizzle") {
+        return `<img src="images/rain.png" alt="Rain emoji"></img>`;
+      } else {
+        if (weather === "Thunderstorm") {
+          return `<img src="images/thunder.png" alt="Thunder emoji"></img>`;
+        } else {
+          if (weather === "Snow") {
+            return `<img src="images/snow.png" alt="Snow emoji"></img>`;
+          } else {
+            return `<img src="images/mist.png" alt="Mist emoji"></img>`;
+          }
+        }
+      }
+    }
+  }
 }
 
 function nightMode() {
@@ -209,5 +233,3 @@ currentLocation.addEventListener("click", findCurrentGps);
 
 findCurrentGps();
 nightMode();
-
-displayForecast();
