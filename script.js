@@ -28,6 +28,7 @@ function displayGpsStats(response) {
   )}º`;
 
   getForecast(response.data.coord);
+  changeMainImage(response.data.weather[0].main);
 }
 
 function showCityTemp(response) {
@@ -40,8 +41,12 @@ function showCityTemp(response) {
   document.querySelector("#description").innerHTML =
     response.data.weather[0].description;
 
+  changeMainImage(response.data.weather[0].main);
+  getForecast(response.data.coord);
+}
+
+function changeMainImage(weather) {
   let iconElement = document.getElementById("main-image");
-  let weather = response.data.weather[0].main;
   if (hour > 20) {
     iconElement.src = "images/moon.png";
     iconElement.alt = "Moon emoji";
@@ -74,8 +79,6 @@ function showCityTemp(response) {
       }
     }
   }
-
-  getForecast(response.data.coord);
 }
 
 function citySearch(event) {
