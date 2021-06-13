@@ -1,10 +1,15 @@
 //change nightmode to sunset time
-//show time of city displayed, external api?
 
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
 let now = new Date();
 let hour = now.getHours();
+
+function latLongForApi(response) {
+  let lat = position.coords.latitude;
+  let long = position.coords.longitude;
+  return `lat=${lat}&lon=${lon}`;
+}
 
 function findCurrentGps() {
   navigator.geolocation.getCurrentPosition(findLatLong);
@@ -145,12 +150,6 @@ function citySearch(event) {
   document.querySelector(".celciusButton").classList.add("buttonClicked");
 }
 
-function getForecast(coordinates) {
-  let city = document.querySelector("#city-title").innerText;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,alerts&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayForecast);
-}
-
 function convertFahrenheit(event) {
   event.preventDefault();
 
@@ -178,6 +177,11 @@ function convertCelcius(event) {
   document.querySelector(".celciusButton").classList.add("buttonUnclicked");
   document.querySelector(".farenButton").classList.remove("buttonClicked");
   document.querySelector(".celciusButton").classList.add("buttonClicked");
+}
+
+function getForecast(coordinates) {
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,alerts&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function displayForecast(response) {
