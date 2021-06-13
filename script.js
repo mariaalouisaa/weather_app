@@ -3,6 +3,8 @@
 
 let apiKey = "a48984de2e1866778622568cbcb97ff1";
 let apiFront = "https://api.openweathermap.org/data/2.5/weather?";
+let now = new Date();
+let hour = now.getHours();
 
 function findCurrentGps() {
   navigator.geolocation.getCurrentPosition(findLatLong);
@@ -27,7 +29,38 @@ function findCurrentGps() {
 
     getForecast(response.data.coord);
     changeMainImage(response.data.weather[0].main);
+    currentGpsTime();
   }
+}
+
+function currentGpsTime() {
+  if (hour < 10) hour = "0" + now.getHours();
+  let minute = now.getMinutes();
+  if (minute < 10) minute = "0" + now.getMinutes();
+  let date = now.getDate();
+  if (date < 10) date = "0" + now.getDate();
+  let months = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  let month = months[now.getMonth()];
+  let year = now.getFullYear();
+
+  document.querySelector("#current-time").innerHTML = `${hour}:${minute}`;
+
+  document.querySelector(
+    "#current-date"
+  ).innerHTML = `${date}-${month}-${year}`;
 }
 
 function showCityTemp(response) {
@@ -40,8 +73,26 @@ function showCityTemp(response) {
   document.querySelector("#description").innerHTML =
     response.data.weather[0].description;
 
+  let city = response.data.name;
+  let country = response.data.sys.country;
+  let timeApi = `https://timezone.abstractapi.com/v1/current_time?api_key=76f674c346ce4f4d9b8d06062cbad013&location=${city},${country}`;
+
+  axios.get(timeApi).then(showCitySearchTime);
+
   changeMainImage(response.data.weather[0].main);
   getForecast(response.data.coord);
+}
+
+function showCitySearchTime(response) {
+  let timedate = response.data.datetime;
+  let time = timedate.slice(10, 16);
+  let cityDate = timedate.slice(8, 10);
+  let cityMonth = timedate.slice(5, 7);
+  let cityYear = timedate.slice(0, 4);
+  document.querySelector("#current-time").innerHTML = time;
+  document.querySelector(
+    "#current-date"
+  ).innerHTML = `${cityDate}-${cityMonth}-${cityYear}`;
 }
 
 function changeMainImage(weather) {
@@ -121,6 +172,9 @@ function convertCelcius(event) {
     .get(`${apiFront}q=${city.textContent}&appid=${apiKey}&units=metric`)
     .then(showCityTemp);
 
+  //use same format to change forecast min/max
+  //move one call api to a global variable called forecastAPI
+
   document.querySelector(".celciusButton").classList.add("buttonUnclicked");
   document.querySelector(".farenButton").classList.remove("buttonClicked");
   document.querySelector(".celciusButton").classList.add("buttonClicked");
@@ -161,7 +215,6 @@ function formatForcastDay(timestamp) {
 }
 
 function formatForecastImage(weather) {
-  console.log(weather);
   if (weather === "Clear") {
     return `<img src="images/sun.png" alt="Sun emoji"></img>`;
   } else {
@@ -189,35 +242,6 @@ function nightMode() {
   if (hour > 20) document.querySelector("body").classList.add("night-bg");
   if (hour > 20) document.querySelector(".main-image").src = "images/moon.png";
 }
-
-let now = new Date();
-
-let hour = now.getHours();
-if (hour < 10) hour = "0" + now.getHours();
-let minute = now.getMinutes();
-if (minute < 10) minute = "0" + now.getMinutes();
-let date = now.getDate();
-if (date < 10) date = "0" + now.getDate();
-let months = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12",
-];
-let month = months[now.getMonth()];
-let year = now.getFullYear();
-
-document.querySelector("#current-time").innerHTML = `${hour}:${minute}`;
-
-document.querySelector("#current-date").innerHTML = `${date}/${month}/${year}`;
 
 let searchBar = document.querySelector("#search-bar");
 searchBar.addEventListener("submit", citySearch);
