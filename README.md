@@ -1,6 +1,12 @@
 # weather_app
-Weather App project using API from https://openweathermap.org/
-App can get current location or search a city, swicth between celcius and farenheit, shows a 5 day forecast and changes the theme when it is nighttime.
+Weather App project made with API from [OpenWeatherMap](https://openweathermap.org/)
 
+**Features include:**
+- Live date and time
+- Ability to use geolocation to locate current city for a search
+- Funtionality to switch between celicuis and fahrenheit
+- A 5 day forecast
+- Night mode that changes automatically depening on the time
+- Animated images
 
-Hosted on Netflify https://jolly-kirch-7434c0.netlify.app/
+Page hosted on [Netflify](https://jolly-kirch-7434c0.netlify.app/)
